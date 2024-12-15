@@ -7,24 +7,26 @@ import axios from 'axios';
 function Register() {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+
     const onFinish = async (values) => {
         setLoading(true);
         try {
-            await axios.post('api/user/register', values);
+            // Use environment variable for backend API URL
+            await axios.post(`${process.env.REACT_APP_API_URL}/api/user/register`, values);
             setLoading(false);
             message.success('Registration successful!');
-
+            navigate('/login');  // Navigate to login page after successful registration
         } catch (error) {
             setLoading(false);
             message.error('Registration failed!');
         }
-    }
+    };
 
     useEffect(() => {
         if (localStorage.getItem('sheyresume-user')) {
             navigate('/home');
         }
-    })
+    });
 
     return (
         <div className='auth-parent'>
@@ -34,32 +36,24 @@ function Register() {
                 <h1>Register</h1>
                 <hr />
                 <Form.Item name="username" label='Username'>
-
                     <Input />
-
                 </Form.Item>
 
                 <Form.Item name="password" label='Password'>
-
                     <Input type='password' />
-
                 </Form.Item>
 
                 <Form.Item name='cpassword' label='Confirm password'>
-
                     <Input type='password' />
-
                 </Form.Item>
-
-
 
                 <div className='d-flex align-items-center justify-content-between'>
                     <Link to='/login' className='underline'>Click here to login</Link>
                     <Button type="primary" htmlType='submit'>Register</Button>
                 </div>
             </Form>
-        </div >
-    )
+        </div>
+    );
 }
 
-export default Register
+export default Register;

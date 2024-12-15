@@ -1,28 +1,29 @@
-import React, { useState } from 'react'
-import DefaultLayout from '../components/DefaultLayout'
+import React, { useState } from 'react';
+import DefaultLayout from '../components/DefaultLayout';
 import { Button, Form, Spin, Tabs, message } from 'antd';
 import PersonalInfo from '../components/PersonalInfo';
 import SkillsEducation from '../components/SkillsEducation';
 import ExperienceProjects from '../components/ExperienceProjects';
 import axios from 'axios';
 
-
 function Profile() {
     const [loading, setLoading] = useState(false);
     const user = JSON.parse(localStorage.getItem('sheyresume-user'));
+
     const onFinish = async (values) => {
         setLoading(true);
         try {
-            const result = await axios.post('api/user/update', { ...values, _id: user._id });
+            // Use environment variable for backend API URL
+            const result = await axios.post(`${process.env.REACT_APP_API_URL}/api/user/update`, { ...values, _id: user._id });
             localStorage.setItem('sheyresume-user', JSON.stringify(result.data));
             setLoading(false);
             message.success('Profile Update successful!');
-
         } catch (error) {
             setLoading(false);
             message.error('Profile Update failed!');
         }
-    }
+    };
+
     const items = [
         {
             key: '1',
@@ -40,6 +41,7 @@ function Profile() {
             children: <ExperienceProjects />,
         },
     ];
+
     return (
         <div className='update-profile'>
             <DefaultLayout>
@@ -52,7 +54,7 @@ function Profile() {
                 </Form>
             </DefaultLayout>
         </div>
-    )
+    );
 }
 
-export default Profile
+export default Profile;
