@@ -11,8 +11,8 @@ function Template2() {
         {/* Header Section */}
         <div className="top d-flex justify-content-between flex-column">
           <h1>
-            {user.firstName ? user.firstName.toUpperCase() : "FIRSTNAME"}{" "}
-            {user.lastName ? user.lastName.toUpperCase() : "LASTNAME"}
+            {user?.firstName ? user?.firstName?.toUpperCase() : "FIRSTNAME"}{" "}
+            {user?.lastName ? user?.lastName?.toUpperCase() : "LASTNAME"}
           </h1>
           <div>
             <p>{user.email || "example@mail.com"}</p>
