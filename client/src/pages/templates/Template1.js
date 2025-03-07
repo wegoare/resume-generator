@@ -11,8 +11,8 @@ function Template1() {
       <div className="header-section d-flex justify-content-between align-items-center">
         <div>
           <h1 className="name">
-            {user.firstName ? user.firstName.toUpperCase() : "FIRSTNAME"}{" "}
-            {user.lastName ? user.lastName.toUpperCase() : "LASTNAME"}
+            {user?.firstName ? user?.firstName?.toUpperCase() : "FIRSTNAME"}{" "}
+            {user?.lastName ? user?.lastName?.toUpperCase() : "LASTNAME"}
           </h1>
           <p className="job-title">{user.position || "Your Position Here"}</p>
         </div>
