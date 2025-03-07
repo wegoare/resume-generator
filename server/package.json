@@ -9,7 +9,7 @@
   },
   "scripts": {
     "install-client": "cd ../client && npm install",
-  "build-client": "cd ../client && npm run build",
+  "build-client": "cd ../client && NODE_OPTIONS=--max-old-space-size=256 npm run build"
   "start": "npm run build-client && node server.js",
     "server": "nodemon server.js",
     "client": "npm start --prefix client",
