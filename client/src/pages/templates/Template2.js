@@ -2,8 +2,13 @@ import React from "react";
 import "../../resources/templates.css";
 
 function Template2() {
-  // Safely parse the user data
-  const user = JSON.parse(localStorage.getItem("sheyresume-user")) || {};
+  // Safely retrieve user data
+  let user = {};
+  try {
+    user = JSON.parse(localStorage.getItem("sheyresume-user")) || {};
+  } catch (error) {
+    console.error("Error parsing user data:", error);
+  }
 
   return (
     <div>
@@ -11,13 +16,13 @@ function Template2() {
         {/* Header Section */}
         <div className="top d-flex justify-content-between flex-column">
           <h1>
-            {user?.firstName ? user?.firstName?.toUpperCase() : "FIRSTNAME"}{" "}
-            {user?.lastName ? user?.lastName?.toUpperCase() : "LASTNAME"}
+            {user?.firstName?.toUpperCase() || "FIRSTNAME"}{" "}
+            {user?.lastName?.toUpperCase() || "LASTNAME"}
           </h1>
           <div>
-            <p>{user.email || "example@mail.com"}</p>
-            <p>{user.address || "Your Address Here"}</p>
-            <p>{user.mobileNumber || "Your Phone Number Here"}</p>
+            <p>{user?.email || "example@mail.com"}</p>
+            <p>{user?.address || "Your Address Here"}</p>
+            <p>{user?.mobileNumber || "Your Phone Number Here"}</p>
           </div>
         </div>
 
@@ -29,7 +34,7 @@ function Template2() {
         <div className="objective mt-3">
           <h3 style={{ backgroundColor: "gray", padding: 10 }}>Objective</h3>
           <hr />
-          <p>{user.careerObjective || "Your career objective goes here."}</p>
+          <p>{user?.careerObjective || "Your career objective goes here."}</p>
         </div>
 
         <div className="divider mt-3"></div>
@@ -38,16 +43,16 @@ function Template2() {
         <div className="education mt-3">
           <h3 style={{ backgroundColor: "gray", padding: 10 }}>Education</h3>
           <hr />
-          {user.education && user.education.length > 0 ? (
+          {user?.education?.length > 0 ? (
             user.education.map((education, index) => (
               <div key={index} className="d-flex align-items-center">
                 <h6 style={{ width: 100 }}>
-                  <b>{education.range}:</b>
+                  <b>{education?.range || "Year Range"}:</b>
                 </h6>
                 <p>
-                  <b>{education.qualification}</b> with{" "}
-                  <b>{education.percentage || "N/A"}%</b> in{" "}
-                  <b>{education.institution || "Your Institution"}</b>
+                  <b>{education?.qualification || "Qualification"}</b> with{" "}
+                  <b>{education?.percentage || "N/A"}%</b> in{" "}
+                  <b>{education?.institution || "Your Institution"}</b>
                 </p>
               </div>
             ))
@@ -62,15 +67,15 @@ function Template2() {
         <div className="experience mt-3">
           <h3 style={{ backgroundColor: "gray", padding: 10 }}>Experience</h3>
           <hr />
-          {user.experience && user.experience.length > 0 ? (
+          {user?.experience?.length > 0 ? (
             user.experience.map((exp, index) => (
               <div key={index} className="d-flex align-items-center">
                 <h6 style={{ width: 100 }}>
-                  <b>{exp.range}:</b>
+                  <b>{exp?.range || "Year Range"}:</b>
                 </h6>
                 <p>
-                  <b>{exp.company || "Your Company"}</b> in{" "}
-                  <b>{exp.place || "Your Location"}</b>
+                  <b>{exp?.company || "Your Company"}</b> in{" "}
+                  <b>{exp?.place || "Your Location"}</b>
                 </p>
               </div>
             ))
@@ -85,16 +90,16 @@ function Template2() {
         <div className="projects mt-3">
           <h3 style={{ backgroundColor: "gray", padding: 10 }}>Projects</h3>
           <hr />
-          {user.projects && user.projects.length > 0 ? (
+          {user?.projects?.length > 0 ? (
             user.projects.map((project, index) => (
               <div key={index} className="d-flex flex-column">
                 <h6>
                   <b>
-                    {project.title || "Project Title"} [
-                    {project.range || "Your Timeline"}]
+                    {project?.title || "Project Title"} [
+                    {project?.range || "Your Timeline"}]
                   </b>
                 </h6>
-                <p>{project.description || "Project description goes here."}</p>
+                <p>{project?.description || "Project description goes here."}</p>
               </div>
             ))
           ) : (
@@ -108,10 +113,10 @@ function Template2() {
         <div className="skills mt-3">
           <h3 style={{ backgroundColor: "gray", padding: 10 }}>Skills</h3>
           <hr />
-          {user.skills && user.skills.length > 0 ? (
+          {user?.skills?.length > 0 ? (
             user.skills.map((skill, index) => (
               <p key={index} className="d-flex flex-column">
-                {skill.technology || "Skill Name"}
+                {skill?.technology || "Skill Name"}
               </p>
             ))
           ) : (
